@@ -1,0 +1,23 @@
+{
+  "name": "e-racebrasil-api",
+  "version": "1.0.0",
+  "description": "This is an api to management and control the data of the virtual races",
+  "main": "bin/server.js",
+  "repository": "https://github.com/Ron-99/e-racebrasil-api",
+  "author": "Ron-99",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon bin/server.js"
+  },
+  "private": false,
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "sequelize-cli": "^6.2.0"
+  }
+}
