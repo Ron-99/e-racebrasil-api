@@ -1,5 +1,9 @@
 const express = require('express');
 
+const UsersRoute = require('./routes/UsersRoute');
+
+require('./database');
+
 const app = express();
 
 app.use(express.json());
@@ -11,6 +15,8 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
     next();
 });
+
+app.use('/user', UsersRoute);
 
 
 module.exports = app;

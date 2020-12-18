@@ -9,7 +9,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      id_rank: {
+      rank_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'ranks', key: 'id' },
@@ -30,17 +30,11 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       updated_by: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       created_at: {
         type: Sequelize.DATE,

@@ -13,7 +13,8 @@ class Users extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Drivers, { foreignKey: 'user_id', as: 'drivers'});
+        this.belongsTo(models.Drivers, {foreignKey: 'user_id', as: 'drivers'});
+
     }
 }
 

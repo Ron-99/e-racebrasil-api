@@ -39,18 +39,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      rank_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'ranks', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
-      season_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'seasons', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-      },
       track_id: {
         type: Sequelize.INTEGER,
         references: { model: 'tracks', key: 'id' },
@@ -59,17 +47,11 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       updated_by: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        allowNull: false
       },
       created_at: {
         type: Sequelize.DATE,
