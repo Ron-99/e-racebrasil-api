@@ -5,6 +5,7 @@ class Penalties extends Model {
         super.init({
             level: DataTypes.INTEGER,
             color: DataTypes.STRING,
+            description: DataTypes.STRING,
             created_by: DataTypes.INTEGER,
             updated_by: DataTypes.INTEGER
         }, {
@@ -13,7 +14,7 @@ class Penalties extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.Drivers, {foreignKey: 'penalty_id', as: 'drivers'});
+        this.hasOne(models.Drivers, {foreignKey: 'penalty_id', as: 'drivers'});
     }
 }
 

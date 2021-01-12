@@ -20,7 +20,7 @@ class Classifications extends Model {
 
     static associate(models){
         this.belongsTo(models.Drivers, {foreignKey: 'driver_id', as: 'drivers'});
-        this.hasOne(models.Tracks, {foreignKey: 'track_id', as: 'tracks'});
+        this.belongsTo(models.Tracks, {foreignKey: 'track_id', as: 'tracks'});
     }
 }
 

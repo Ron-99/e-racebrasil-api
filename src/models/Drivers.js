@@ -12,7 +12,7 @@ class Drivers extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Penalties, {foreignKey: 'penalty_id', as: 'penalties'});
+        this.belongsTo(models.Penalties, {foreignKey: 'penalty_id', as: 'penalties'});
         this.hasMany(models.Ranks, {foreignKey: 'driver_id', as: 'ranks'});
         this.hasMany(models.Teams, {foreignKey: 'driver_id', as: 'teams'});
         this.hasMany(models.Classifications, {foreignKey: 'driver_id', as: 'classifications'});

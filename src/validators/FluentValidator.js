@@ -5,7 +5,7 @@ function ValidationContract(){
 }
 
 ValidationContract.prototype.isRequired = (value, message) => {
-    if(!value || value.length <= 0)
+    if(!String(value) || String(value).length <= 0)
         errors.push({message: message});
 }
 
@@ -25,7 +25,7 @@ ValidationContract.prototype.hasLen = (value, len, message) => {
 }
 
 ValidationContract.prototype.isInteger = (value, message) => {
-    if(!value || !Number.isInteger(value))
+    if(!String(value) || !Number.isInteger(value))
         errors.push({message: message});
 }
 
