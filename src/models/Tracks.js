@@ -12,7 +12,7 @@ class Tracks extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.Classifications, {foreignKey: 'track_id', as: 'classifications'});
+        this.hasOne(models.Classifications, {foreignKey: 'track_id', as: 'classifications'});
     }
 }
 

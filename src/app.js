@@ -2,6 +2,7 @@ const express = require('express');
 
 const UsersRoute = require('./routes/UsersRoute');
 const PenaltiesRoute = require('./routes/PenaltiesRoute');
+const TracksRoute = require('./routes/TracksRoute');
 
 require('./database');
 
@@ -19,6 +20,6 @@ app.use(function (req, res, next) {
 
 app.use('/user', UsersRoute);
 app.use('/penalty', PenaltiesRoute);
-
+app.use('/track', TracksRoute);
 
 module.exports = app;
