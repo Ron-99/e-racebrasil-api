@@ -12,7 +12,7 @@ module.exports = {
         const drivers = await Drivers.findAll({
             where: {
                 name: {
-                    [Op.like]: `%${name}%`
+                    [Op.like]: `${name}%`
                 }
             }
         });
@@ -31,6 +31,12 @@ module.exports = {
     },
 
     async update(id, data){
+        await Drivers.update(data, {where: {id}});
+        const driver = await Drivers.findByPk(id);
+        return driver;
+    },
+
+    async updatePenalty(id, data){
         await Drivers.update(data, {where: {id}});
         const driver = await Drivers.findByPk(id);
         return driver;

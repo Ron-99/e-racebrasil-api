@@ -4,9 +4,15 @@ const repository = require('../repositories/DriversRepository');
 
 module.exports = {
 
-    async index(_, res) {
+    async index(req, res) {
         try {
-            const drivers = await repository.findAll();
+            const { name } = req.query;
+            if(!name){
+                const drivers = await repository.findAll();
+                res.status(200).send(drivers);
+                return;
+            }
+            const drivers = await repository.findByName(name);
             res.status(200).send(drivers);
         } catch (e) {
             res.status(400).send({
@@ -64,7 +70,7 @@ module.exports = {
                 return;
             }
 
-            const driver = await repository.create({name, user_id, created_by, updated_by});
+            const driver = await repository.create({name, user_id, created_by, updated_by, penalty_id: 1});
 
             res.status(201).send({
                 message: 'Piloto criado com sucesso',
@@ -86,7 +92,7 @@ module.exports = {
 
             contract.isRequired(name, 'É necessário informar o nome do piloto');
             contract.isRequired(user_id, 'É necessário informar o usuário do piloto');
-            contract.isRequired(updated_by, 'É necessário informar o usuário que atualizou essa punição');
+            contract.isRequired(updated_by, 'É necessário informar o usuário que atualizou esse piloto');
 
             if (!contract.isValid()) {
                 res.status(400).send(contract.errors()).end();
@@ -109,8 +115,14 @@ module.exports = {
 
     async updatePenalty(req, res){
         try{
+            const { id } = req.params;
             const { penalty_id } = req.query;
-            
+            const driver = await repository.updatePenalty(id, {penalty_id})
+
+            res.status(200).send({
+                message: 'Penalidade do piloto atualizada com sucesso',
+                data: driver
+            });
         }catch(e){
             res.status(400).send({
                 message: 'Falha ao processar sua requisição'
