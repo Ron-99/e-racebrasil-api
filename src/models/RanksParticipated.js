@@ -1,9 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Teams extends Model {
+class RanksParticipated extends Model {
     static init(sequelize) {
         super.init({
-            name: DataTypes.STRING,
             created_by: DataTypes.INTEGER,
             updated_by: DataTypes.INTEGER
         }, {
@@ -12,8 +11,9 @@ class Teams extends Model {
     }
 
     static associate(models){
-        this.hasMany(models.TeamsParticipated, { foreignKey: 'id', as: 'teams_participated'})
+        this.belongsTo(models.Drivers, {foreignKey: 'id', as: 'drivers'});
+        this.belongsTo(models.Ranks, {foreignKey: 'id', as: 'ranks'})
     }
 }
 
-module.exports = Teams;
+module.exports = RanksParticipated;

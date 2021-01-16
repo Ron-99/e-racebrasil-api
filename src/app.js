@@ -4,6 +4,7 @@ const UsersRoute = require('./routes/UsersRoute');
 const PenaltiesRoute = require('./routes/PenaltiesRoute');
 const TracksRoute = require('./routes/TracksRoute');
 const DriversRoute = require('./routes/DriversRoute');
+const TeamsRoute = require('./routes/TeamsRoute');
 
 require('./database');
 
@@ -23,5 +24,6 @@ app.use('/user', UsersRoute);
 app.use('/penalty', PenaltiesRoute);
 app.use('/track', TracksRoute);
 app.use('/driver', DriversRoute);
+app.use('/team', TeamsRoute);
 
 module.exports = app;

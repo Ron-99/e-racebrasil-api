@@ -20,12 +20,13 @@ module.exports = {
 
     async store(req, res){
         try{
-            const { name, email, role, password } = req.body;
+            const { name, email, role, password, driver_id } = req.body;
             const contract = new ValidationContract();
 
             contract.isRequired(name, 'O seu nome de usuário deve ser informado');
             contract.isRequired(email, 'O seu e-mail deve ser informado');
             contract.isEmail(email, 'E-mail inválido');
+            contract.isRequired(driver_id, 'O piloto deve ser informado');
             contract.isRequired(role, 'O seu cargo deve ser informado');
             contract.isRequired(password, 'A sua senha deve ser informada')
             contract.hasMinLen(password, 6,'A senha deve ter no minimo 6 caracteres');
@@ -35,7 +36,7 @@ module.exports = {
                 res.status(400).send(contract.errors()).end();
                 return;
             }
-            const user = await Users.create({name, email, role, password: md5(password)});
+            const user = await Users.create({name, email, role, password: md5(password), driver_id});
 
             res.status(201).send({
                 message: 'Usuário criado com sucesso',
@@ -140,7 +141,7 @@ module.exports = {
 
     async update (req, res){
         try{
-            const { name, email, role, password } = req.body;
+            const { name, email, role, password, driver_id } = req.body;
             const { id } = req.params;
             const contract = new ValidationContract();
 
@@ -148,6 +149,7 @@ module.exports = {
             contract.isRequired(email, 'O seu e-mail deve ser informado');
             contract.isEmail(email, 'E-mail inválido');
             contract.isRequired(role, 'O seu cargo deve ser informado');
+            contract.isRequired(driver_id, 'O piloto deve ser informado');
             contract.isRequired(password, 'A sua senha deve ser informada')
             contract.hasMinLen(password, 6,'A senha deve ter no minimo 6 caracteres');
             contract.hasMaxLen(password, 12,'A senha deve ter no máximo 12 caracteres');
@@ -156,7 +158,7 @@ module.exports = {
                 res.status(400).send(contract.errors()).end();
                 return;
             }
-            await Users.update({name, email, role, password: md5(password)}, { where: {id}});
+            await Users.update({name, email, role, password: md5(password), driver_id}, { where: {id}});
             const user = await Users.findByPk(id);
 
             res.status(200).send({

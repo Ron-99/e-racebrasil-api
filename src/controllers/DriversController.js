@@ -1,5 +1,4 @@
 const ValidationContract = require('../validators/FluentValidator');
-const Drivers = require('../models/Drivers');
 const repository = require('../repositories/DriversRepository');
 
 module.exports = {
@@ -35,7 +34,7 @@ module.exports = {
         }
     },
 
-    async findBydId(req, res){
+    async findById(req, res){
         try{
             const driver = await repository.findById();
             res.status(200).send(driver);
@@ -57,11 +56,12 @@ module.exports = {
 
     async store(req, res) {
         try {
-            const { name, user_id, created_by, updated_by } = req.body;
+            const { name, rank_id, team_id, created_by, updated_by } = req.body;
             const contract = new ValidationContract();
 
             contract.isRequired(name, 'É necessário informar o nome do piloto');
-            contract.isRequired(user_id, 'É necessário informar o usuário do piloto');
+            contract.isRequired(rank_id, 'É necessário informar o rank inicial do piloto');
+            contract.isRequired(team_id, 'É necessário informar o rank inicial do piloto');
             contract.isRequired(created_by, 'É necessário informar o criador dessa punição');
             contract.isRequired(updated_by, 'É necessário informar o usuário que atualizou essa punição');
 
@@ -70,7 +70,7 @@ module.exports = {
                 return;
             }
 
-            const driver = await repository.create({name, user_id, created_by, updated_by, penalty_id: 1});
+            const driver = await repository.create({name, driver_id, created_by, updated_by, penalty_id: 1});
 
             res.status(201).send({
                 message: 'Piloto criado com sucesso',

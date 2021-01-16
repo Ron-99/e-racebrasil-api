@@ -2,29 +2,32 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('drivers', { 
+    await queryInterface.createTable('teams_participated', { 
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      penalty_id: {
+      driver_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'penalties', key: 'id' },
+        references: { model: 'drivers', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      created_by: {
+      team_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'teams', key: 'id'},
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      created_by:{
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      updated_by: {
+      updated_by:{
         type: Sequelize.INTEGER,
         allowNull: false
       },
@@ -36,10 +39,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
+
     });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('drivers');
+    await queryInterface.dropTable('teams_participated');
   }
 };
