@@ -6,13 +6,14 @@ class TeamsParticipated extends Model {
             created_by: DataTypes.INTEGER,
             updated_by: DataTypes.INTEGER
         }, {
-            sequelize
+            sequelize,
+            tableName: 'teams_participated'
         })
     }
 
     static associate(models){
-        this.belongsTo(models.Teams, {foreignKey: 'id', as: 'teams'});
-        this.belongsTo(models.Ranks, {foreignKey: 'id', as: 'ranks'})
+        this.belongsTo(models.Teams, {foreignKey: 'team_id', as: 'teams'});
+        this.belongsTo(models.Drivers, {foreignKey: 'driver_id', as: 'drivers'});
     }
 }
 

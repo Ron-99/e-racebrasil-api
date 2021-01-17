@@ -1,5 +1,5 @@
 const repository = require('../repositories/TeamsRepository');
-const FluentValidator = require('../validators/FluentValidator');
+const ValidationContract = require('../validators/FluentValidator');
 
 module.exports = {
     
@@ -31,7 +31,7 @@ module.exports = {
     async store (req, res) {
         try{
             const { name, created_by, updated_by } = req.body;
-            const contract = new FluentValidator();
+            const contract = new ValidationContract();
 
             contract.isRequired(name, 'É necessário informar o nome da equipe');
             contract.isRequired(created_by, 'É necessário informar o usuário que está cadastrando a equipe');
@@ -60,7 +60,7 @@ module.exports = {
         try{
             const { id } = req.params;
             const { name, updated_by } = req.body;
-            const contract = new FluentValidator();
+            const contract = new ValidationContract();
 
             contract.isRequired(name, 'É necessário informar o nome da equipe');
             contract.isRequired(updated_by, 'É necessário informar o usuário que está atualizando a equipe');
@@ -87,7 +87,7 @@ module.exports = {
     async delete (req, res){
         try{
             const { id } = req.params;
-            const contract = new FluentValidator();
+            const contract = new ValidationContract();
 
             contract.isRequired(id, 'É necessário informar a equipe que deseja excluir');
 
