@@ -37,9 +37,7 @@ module.exports = {
             contract.isRequired(updated_by, 'É necessário informar o usuário que está atualizando esse rank');
 
             if(!contract.isValid()){
-                res.status(400).send({
-                    message: 'Falha ao processar sua requisição'
-                });
+                res.status(400).send(contract.errors()).end();
                 return;
             }
 
@@ -68,9 +66,7 @@ module.exports = {
             contract.isRequired(updated_by, 'É necessário informar o usuário que está atualizando esse rank');
 
             if(!contract.isValid()){
-                res.status(400).send({
-                    message: 'Falha ao processar sua requisição'
-                });
+                res.status(400).send(contract.errors()).end();
                 return;
             }
 
