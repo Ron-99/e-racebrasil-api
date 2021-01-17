@@ -33,7 +33,7 @@ Ranks.associate(connection.models);
 Seasons.associate(connection.models);
 Teams.associate(connection.models);
 Tracks.associate(connection.models);
-RanksParticipated.associate(connection);
-TeamsParticipated.associate(connection);
+RanksParticipated.associate(connection.models);
+TeamsParticipated.associate(connection.models);
 
 module.exports = connection;
