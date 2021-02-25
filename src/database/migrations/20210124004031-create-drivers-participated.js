@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('teams_participated', { 
+    await queryInterface.createTable('drivers_participated', { 
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -22,6 +22,17 @@ module.exports = {
         references: { model: 'teams', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
+      },
+      season_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'seasons', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      reserve: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
       },
       created_by:{
         type: Sequelize.INTEGER,
@@ -43,7 +54,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface) => {
-    await queryInterface.dropTable('teams_participated');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('drivers_participated');
   }
 };

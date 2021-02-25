@@ -7,20 +7,20 @@ class Classifications extends Model {
             best_time: DataTypes.STRING,
             best_lap: DataTypes.BOOLEAN,
             trial_time: DataTypes.STRING,
-            date: DataTypes.DATE,
+            date: DataTypes.DATEONLY,
             points: DataTypes.INTEGER,
-            driver_id: DataTypes.INTEGER,
-            track_id: DataTypes.INTEGER,
             created_by: DataTypes.INTEGER,
             updated_by: DataTypes.INTEGER
         }, {
-            sequelize
+            sequelize,
+            tableName: 'classification'
         })
     }
 
     static associate(models){
         this.belongsTo(models.Drivers, {foreignKey: 'driver_id', as: 'drivers'});
         this.belongsTo(models.Tracks, {foreignKey: 'track_id', as: 'tracks'});
+        this.belongsTo(models.Seasons, {foreignKey: 'season_id', as: 'seasons'});
     }
 }
 

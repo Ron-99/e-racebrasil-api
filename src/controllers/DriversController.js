@@ -1,17 +1,18 @@
 const ValidationContract = require('../validators/FluentValidator');
 const repository = require('../repositories/DriversRepository');
+const repositorySeasons = require('../repositories/SeasonsRepository');
 
 module.exports = {
 
     async index(req, res) {
         try {
-            const { name } = req.query;
-            if(!name){
+            const { name, all } = req.query;
+            if(all){
                 const drivers = await repository.findAll();
                 res.status(200).send(drivers);
-                return;
             }
-            const drivers = await repository.findByName(name);
+            const season = await repositorySeasons.findLastSeason();
+            const drivers = await repository.findByName(name, season.number);
             res.status(200).send(drivers);
         } catch (e) {
             res.status(400).send({
@@ -36,8 +37,23 @@ module.exports = {
 
     async findById(req, res){
         try{
-            const driver = await repository.findById();
-            res.status(200).send(driver);
+            const { id } = req.params;
+
+            const driver = await repository.findById(id);
+            const teams = await repository.findTeams(id);
+            let teams2 = [];
+            teams.forEach(team => {
+                const team2 = {
+                    id: team.teams.id,
+                    name: team.teams.name
+                }
+                teams2.push(team2)
+            });
+            
+            driver[0].teams = teams2;
+
+            console.log(driver[0])
+            res.status(200).send(driver[0]);
         }catch(e){
             res.status(400).send({
                 message: 'Falha ao processar sua requisição'
@@ -47,7 +63,42 @@ module.exports = {
     },
 
     async findWins(req, res){
+        try{
+            const { id } = req.params;
+            const driver = await repository.findTrophys(id);
+            res.status(200).send(driver[0]);
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
 
+    async findLatestsRaces(req, res){
+        try{
+            const { id } = req.params;
+            const races = await repository.findLatestsRaces(id);
+            res.status(200).send(races);
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
+
+    async findPenalty (req, res){
+        try{
+            const { id } = req.params;
+            const races = await repository.findLatestsRaces(id);
+            res.status(200).send(races);
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
     },
 
     async findRaces(req, res){

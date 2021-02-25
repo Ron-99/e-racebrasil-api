@@ -13,7 +13,6 @@ class Ranks extends Model {
 
     static associate(models){
         this.hasMany(models.Seasons, { foreignKey: 'rank_id', as: 'seasons'});
-        this.hasMany(models.RanksParticipated, { foreignKey: 'id', as: 'ranks_participated'})
     }
 }
 

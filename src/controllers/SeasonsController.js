@@ -28,12 +28,29 @@ module.exports = {
         }
     },
 
+    async findByRank (req, res){
+        try{
+            const { rank_id } = req.params;
+            const seasons = await repository.findByRank(rank_id);
+            res.status(200).send(seasons);
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
+
+    async findLastSeasonByRank (req, res){
+        
+    },
+
     async store (req, res){
         try{
-            const { rank_id, number, initial_date, final_date, created_by, updated_by } = req.body;
+            const { season_id, number, initial_date, final_date, created_by, updated_by } = req.body;
 
             const contract = new ValidationContract();
-            contract.isRequired(rank_id, 'É necessário informar a liga');
+            contract.isRequired(season_id, 'É necessário informar a temporada da liga');
             contract.isRequired(number, 'É necessário informar o número da temporada');
             contract.isInteger(number, 'É necessário que o número da temporada seja inteiro');
             contract.isRequired(initial_date, 'É necessário informar a data de inicio da temporada');
@@ -46,7 +63,7 @@ module.exports = {
                 return;
             }
 
-            const season = await repository.create({ rank_id, number, initial_date, final_date, created_by, updated_by });
+            const season = await repository.create({ season_id, number, initial_date, final_date, created_by, updated_by });
 
             res.status(201).send({
                 message: 'Temporada criada com sucesso',
@@ -63,10 +80,10 @@ module.exports = {
     async update (req, res){
         try{
             const { id } = req.params;
-            const { rank_id, number, initial_date, final_date, updated_by } = req.body;
+            const { season_id, number, initial_date, final_date, updated_by } = req.body;
 
             const contract = new ValidationContract();
-            contract.isRequired(rank_id, 'É necessário informar a liga');
+            contract.isRequired(season_id, 'É necessário informar a temporada da liga');
             contract.isRequired(number, 'É necessário informar o número da temporada');
             contract.isInteger(number, 'É necessário que o número da temporada seja inteiro');
             contract.isRequired(initial_date, 'É necessário informar a data de inicio da temporada');
@@ -78,7 +95,7 @@ module.exports = {
                 return;
             }
 
-            const season = await repository.update(id, { rank_id, number, initial_date, final_date, updated_by });
+            const season = await repository.update(id, { season_id, number, initial_date, final_date, updated_by });
 
             res.status(200).send({
                 message: 'Temporada atualizada com sucesso',

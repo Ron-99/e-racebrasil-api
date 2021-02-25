@@ -12,7 +12,7 @@ class Teams extends Model {
     }
 
     static associate(models){
-        this.hasMany(models.TeamsParticipated, { foreignKey: 'id', as: 'teams_participated'})
+        this.hasMany(models.DriversParticipated, { foreignKey: 'id', as: 'drivers_participated'})
     }
 }
 

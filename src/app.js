@@ -7,6 +7,7 @@ const DriversRoute = require('./routes/DriversRoute');
 const TeamsRoute = require('./routes/TeamsRoute');
 const RanksRoute = require('./routes/RanksRoute');
 const SeasonsRoute = require('./routes/SeasonsRoute');
+const ClassificationsRoute = require('./routes/ClassificationRoute');
 
 require('./database');
 
@@ -29,5 +30,6 @@ app.use('/driver', DriversRoute);
 app.use('/team', TeamsRoute);
 app.use('/rank', RanksRoute);
 app.use('/season', SeasonsRoute);
+app.use('/classification', ClassificationsRoute);
 
 module.exports = app;
