@@ -184,7 +184,7 @@ module.exports = {
         try{
             const { name, newName, updated_by } = req.body;
             const season = await repositorySeasons.findLastSeason();
-            const id = await repository.findByName(name, season);
+            const id = await repository.findByName(name, season.number);
             
             const driver = await repository.updateName(id[0].id, {name: newName, updated_by});
             res.status(200).send({
