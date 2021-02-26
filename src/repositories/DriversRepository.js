@@ -28,7 +28,7 @@ module.exports = {
             eracebrasil.seasons s ON s.id = dp.season_id INNER JOIN 
             eracebrasil.ranks r ON r.id = s.rank_id 
         WHERE 
-            d.name LIKE '%${name}%'
+            d.name LIKE '${name}%'
         `)
         return drivers[0];
     },
