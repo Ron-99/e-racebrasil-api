@@ -11,8 +11,7 @@ module.exports = {
                 const drivers = await repository.findAll();
                 res.status(200).send(drivers);
             }
-            const season = await repositorySeasons.findLastSeason();
-            const drivers = await repository.findByName(name, season.number);
+            const drivers = await repository.findByName(name);
             res.status(200).send(drivers);
         } catch (e) {
             res.status(400).send({
@@ -172,6 +171,25 @@ module.exports = {
                 message: 'Penalidade do piloto atualizada com sucesso',
                 data: driver
             });
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
+
+    async updateName(req, res){
+        try{
+            const { name, newName, updated_by } = req.body;
+            const id = await repository.findByName(name);
+            
+            const driver = await repository.updateName(id[0].id, {name: newName, updated_by});
+            res.status(200).send({
+                message: 'Nome atualizado com sucesso',
+                data: driver
+            });
+
         }catch(e){
             res.status(400).send({
                 message: 'Falha ao processar sua requisição'

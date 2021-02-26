@@ -14,7 +14,7 @@ module.exports = {
         return drivers;
     },
 
-    async findByName (name, season){
+    async findByName (name){
         const drivers = await Drivers.sequelize.query(`
         SELECT
             d.id,
@@ -28,7 +28,7 @@ module.exports = {
             eracebrasil.seasons s ON s.id = dp.season_id INNER JOIN 
             eracebrasil.ranks r ON r.id = s.rank_id 
         WHERE 
-            d.name LIKE '${name}%' AND s.\`number\` = ${season}
+            d.name LIKE '%${name}%'
         `)
         return drivers[0];
     },
@@ -164,6 +164,12 @@ module.exports = {
     },
 
     async update(id, data){
+        await Drivers.update(data, {where: {id}});
+        const driver = await Drivers.findByPk(id);
+        return driver;
+    },
+
+    async updateName(id, data){
         await Drivers.update(data, {where: {id}});
         const driver = await Drivers.findByPk(id);
         return driver;

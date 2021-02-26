@@ -13,6 +13,7 @@ router.post('/', authService.authorize, DriversController.store);
 router.post('/:driver_id/team/:team_id/season/:season_id', authService.authorize,DriversParticipatedController.store);
 router.put('/:id', authService.authorize, DriversController.update);
 router.patch('/:id', authService.authorize, DriversController.updatePenalty);
+router.patch('/name/newname', DriversController.updateName)
 
 
 module.exports = router;
