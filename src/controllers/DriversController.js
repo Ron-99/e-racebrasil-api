@@ -105,6 +105,22 @@ module.exports = {
 
     },
 
+    async findCoins (req, res){
+        try{
+            const { name } = req.query;
+            const season = await repositorySeasons.findLastSeason();
+            const id = await repository.findByName(name, season.number);
+
+            const driver = await repository.findCoins(id[0].id);
+            res.status(200).send(driver);
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
+
     async store(req, res) {
         try {
             const { name, created_by, updated_by } = req.body;
@@ -119,7 +135,7 @@ module.exports = {
                 return;
             }
 
-            const driver = await repository.create({name, created_by, updated_by, penalty_id: 1});
+            const driver = await repository.create({name, created_by, updated_by, penalty_id: 1, coins: 0});
 
             res.status(201).send({
                 message: 'Piloto criado com sucesso',
@@ -192,6 +208,26 @@ module.exports = {
                 data: driver
             });
 
+        }catch(e){
+            res.status(400).send({
+                message: 'Falha ao processar sua requisição'
+            });
+            console.error(e);
+        }
+    },
+
+    async updateCoins(req, res){
+        try{
+            const { name, coins, updated_by } = req.body;
+            const season = await repositorySeasons.findLastSeason();
+            const id = await repository.findByName(name, season.number);
+            let driverCoins = await repository.findCoins(id[0].id);
+
+            const driver = await repository.updateCoins(id[0].id, {coins: (driverCoins.coins + coins), updated_by});
+            res.status(200).send({
+                message: `Moedas atualizadas`,
+                data: driver
+            });
         }catch(e){
             res.status(400).send({
                 message: 'Falha ao processar sua requisição'

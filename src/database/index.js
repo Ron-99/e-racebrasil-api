@@ -10,6 +10,9 @@ const Seasons = require('../models/Seasons');
 const Teams = require('../models/Teams');
 const Tracks = require('../models/Tracks');
 const DriversParticipated = require('../models/DriversParticipated');
+const SaleTeam = require('../models/SaleTeam');
+const SaleTeamRank = require('../models/SaleTeamRank');
+const TempTeams = require('../models/TempTeams');
 
 const connection = new Sequelize(dbConfig);
 
@@ -22,6 +25,9 @@ Seasons.init(connection);
 Teams.init(connection);
 Tracks.init(connection);
 DriversParticipated.init(connection);
+SaleTeam.init(connection);
+SaleTeamRank.init(connection);
+TempTeams.init(connection);
 
 Users.associate(connection.models);
 Classifications.associate(connection.models);
@@ -32,5 +38,8 @@ Seasons.associate(connection.models);
 Teams.associate(connection.models);
 Tracks.associate(connection.models);
 DriversParticipated.associate(connection.models);
+SaleTeam.associate(connection.models);
+SaleTeamRank.associate(connection.models);
+TempTeams.associate(connection.models);
 
 module.exports = connection;

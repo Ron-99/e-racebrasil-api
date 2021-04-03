@@ -4,6 +4,7 @@ class Drivers extends Model {
     static init(sequelize) {
         super.init({
             name: DataTypes.STRING,
+            coins: DataTypes.DOUBLE,
             created_by: DataTypes.INTEGER,
             updated_by: DataTypes.INTEGER
         }, {

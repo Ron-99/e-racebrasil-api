@@ -9,11 +9,13 @@ router.get('/:id', DriversController.findById);
 router.get('/:id/wins/', DriversController.findWins);
 router.get('/:id/races', DriversController.findLatestsRaces);
 router.get('/:id/penalty', DriversController.findPenalty);
+router.get('/:id/coins', DriversController.findCoins);
 router.post('/', authService.authorize, DriversController.store);
 router.post('/:driver_id/team/:team_id/season/:season_id', authService.authorize,DriversParticipatedController.store);
 router.put('/:id', authService.authorize, DriversController.update);
 router.patch('/:id', authService.authorize, DriversController.updatePenalty);
 router.patch('/name/newname', DriversController.updateName)
+router.patch('/coins/update', DriversController.updateCoins)
 
 
 module.exports = router;

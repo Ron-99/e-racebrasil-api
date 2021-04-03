@@ -1,9 +1,6 @@
 const Drivers = require('../models/Drivers');
 const DriversParticipated = require('../models/DriversParticipated');
 const Classifications = require('../models/Classifications');
-const Tracks = require('../models/Tracks');
-const Seasons = require('../models/Seasons');
-const Ranks = require('../models/Ranks');
 const Teams = require('../models/Teams');
 
 
@@ -158,6 +155,15 @@ module.exports = {
         return teams;
     },
 
+    async findCoins (id){
+        const coins = await Drivers.findOne({
+            attributes: ['coins'],
+            where: {id}
+        });
+
+        return coins;
+    },
+
     async create (data){
         const driver = await Drivers.create(data);
         return driver;
@@ -176,6 +182,12 @@ module.exports = {
     },
 
     async updatePenalty(id, data){
+        await Drivers.update(data, {where: {id}});
+        const driver = await Drivers.findByPk(id);
+        return driver;
+    },
+
+    async updateCoins(id, data){
         await Drivers.update(data, {where: {id}});
         const driver = await Drivers.findByPk(id);
         return driver;
