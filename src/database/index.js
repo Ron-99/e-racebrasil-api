@@ -13,6 +13,7 @@ const DriversParticipated = require('../models/DriversParticipated');
 const SaleTeam = require('../models/SaleTeam');
 const SaleTeamRank = require('../models/SaleTeamRank');
 const TempTeams = require('../models/TempTeams');
+const Posts = require('../models/Posts');
 
 const connection = new Sequelize(dbConfig);
 
@@ -28,6 +29,7 @@ DriversParticipated.init(connection);
 SaleTeam.init(connection);
 SaleTeamRank.init(connection);
 TempTeams.init(connection);
+Posts.init(connection);
 
 Users.associate(connection.models);
 Classifications.associate(connection.models);
@@ -41,5 +43,6 @@ DriversParticipated.associate(connection.models);
 SaleTeam.associate(connection.models);
 SaleTeamRank.associate(connection.models);
 TempTeams.associate(connection.models);
+Posts.associate(connection.models);
 
 module.exports = connection;

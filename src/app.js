@@ -9,6 +9,7 @@ const RanksRoute = require('./routes/RanksRoute');
 const SeasonsRoute = require('./routes/SeasonsRoute');
 const ClassificationsRoute = require('./routes/ClassificationRoute');
 const TempTeamsRoute = require('./routes/TempTeamsRoute');
+const PostsRoute = require('./routes/PostsRoute');
 
 require('./database');
 
@@ -33,5 +34,6 @@ app.use('/rank', RanksRoute);
 app.use('/season', SeasonsRoute);
 app.use('/classification', ClassificationsRoute);
 app.use('/temp-teams', TempTeamsRoute);
+app.use('/posts', PostsRoute);
 
 module.exports = app;
