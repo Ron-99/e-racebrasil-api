@@ -20,7 +20,7 @@ module.exports = {
 
     async store(req, res){
         try{
-            const { name, email, role, password, driver_id } = req.body;
+            const { name, email, role, password, phone, address, driver_id } = req.body;
             const contract = new ValidationContract();
 
             contract.isRequired(name, 'O seu nome de usuário deve ser informado');
@@ -36,7 +36,7 @@ module.exports = {
                 res.status(400).send(contract.errors()).end();
                 return;
             }
-            const user = await Users.create({name, email, role, password: md5(password), driver_id});
+            const user = await Users.create({name, email, role, phone, address, password: md5(password), driver_id});
 
             res.status(201).send({
                 message: 'Usuário criado com sucesso',
