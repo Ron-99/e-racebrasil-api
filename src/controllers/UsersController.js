@@ -20,7 +20,7 @@ module.exports = {
 
     async store(req, res){
         try{
-            const { name, email, role, password, driver_id } = req.body;
+            const { name, email, role, password, phone, address, driver_id } = req.body;
             const contract = new ValidationContract();
 
             contract.isRequired(name, 'O seu nome de usuário deve ser informado');
@@ -28,15 +28,16 @@ module.exports = {
             contract.isEmail(email, 'E-mail inválido');
             contract.isRequired(driver_id, 'O piloto deve ser informado');
             contract.isRequired(role, 'O seu cargo deve ser informado');
-            contract.isRequired(password, 'A sua senha deve ser informada')
-            contract.hasMinLen(password, 6,'A senha deve ter no minimo 6 caracteres');
-            contract.hasMaxLen(password, 12,'A senha deve ter no máximo 12 caracteres');
+            // contract.isRequired(password, 'A sua senha deve ser informada')
+            // contract.hasMinLen(password, 6,'A senha deve ter no minimo 6 caracteres');
+            // contract.hasMaxLen(password, 12,'A senha deve ter no máximo 12 caracteres');
+
 
             if(!contract.isValid()){
                 res.status(400).send(contract.errors()).end();
                 return;
             }
-            const user = await Users.create({name, email, role, password: md5(password), driver_id});
+            const user = await Users.create({name, email, role, phone, address, password: md5(password || '1234567'), driver_id});
 
             res.status(201).send({
                 message: 'Usuário criado com sucesso',
