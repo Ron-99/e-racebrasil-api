@@ -8,7 +8,8 @@ class Users extends Model {
             password: DataTypes.STRING,
             role: DataTypes.ENUM('user', 'admin'),
             phone: DataTypes.STRING,
-            address: DataTypes.STRING
+            address: DataTypes.STRING,
+            driver_id: DataTypes.INTEGER
         }, {
             sequelize
         })
