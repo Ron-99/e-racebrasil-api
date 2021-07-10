@@ -1,6 +1,7 @@
 const ValidationContract = require('../validators/FluentValidator');
 const repository = require('../repositories/DriversRepository');
 const repositorySeasons = require('../repositories/SeasonsRepository');
+const Users = require('../models/Users')
 
 module.exports = {
 
@@ -107,19 +108,31 @@ module.exports = {
 
     async store(req, res) {
         try {
-            const { name, created_by, updated_by } = req.body;
+            const { name, email, number, created_by, updated_by } = req.body;
             const contract = new ValidationContract();
 
             contract.isRequired(name, 'É necessário informar o nome do piloto');
+            contract.isRequired(number, 'É necessário informar o número do piloto');
+            contract.hasMaxLen(number, 2, 'O número do piloto deve ter no máximo dois algarismos');
+            contract.hasMinLen(number, 1, 'O número do piloto deve ter no minimo um algarismos')
             contract.isRequired(created_by, 'É necessário informar o criador dessa punição');
             contract.isRequired(updated_by, 'É necessário informar o usuário que atualizou essa punição');
+            const numberExists = await repository.numberExists(number);
+            const nickExists = await repository.nickExists(name);
+            const emailExists = !!(await Users.findOne({where: {email}}));
+            if(emailExists)
+                contract.errors().push({message: 'Já existe um piloto com esse e-mail'})
+            if(numberExists)
+                contract.errors().push({message: 'Já existe um piloto com esse número'})
+            if(nickExists)
+                contract.errors().push({message: 'Já existe um piloto com esse nick'})
 
             if (!contract.isValid()) {
                 res.status(400).send(contract.errors()).end();
                 return;
             }
 
-            const driver = await repository.create({name, created_by, updated_by, penalty_id: 1});
+            const driver = await repository.create({name, number, created_by, updated_by, penalty_id: 1});
 
             res.status(201).send({
                 message: 'Piloto criado com sucesso',

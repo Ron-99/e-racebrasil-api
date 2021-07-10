@@ -28,7 +28,7 @@ module.exports = {
             eracebrasil.seasons s ON s.id = dp.season_id INNER JOIN 
             eracebrasil.ranks r ON r.id = s.rank_id 
         WHERE 
-            d.name LIKE '${name}%' AND s.\`number\` = ${season}
+            d.name LIKE '%${name}%' AND s.number = '${season}'
         `)
         return drivers[0];
     },
@@ -156,6 +156,15 @@ module.exports = {
         });
 
         return teams;
+    },
+
+    async numberExists (number) {
+        const driver = await Drivers.findOne({where: {number}});
+        return !!driver
+    },
+    async nickExists (name) {
+        const driver = await Drivers.findOne({where: {name}});
+        return !!driver
     },
 
     async create (data){
